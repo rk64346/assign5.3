@@ -1,0 +1,289 @@
+{
+ "cells": [
+  {
+   "cell_type": "raw",
+   "id": "fc12d232-301d-4506-ab38-bb2660920c39",
+   "metadata": {},
+   "source": [
+    "Q1- what is multithreading in python? why it is used?name the module used to handale thread in python"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "4b7a1b5a-ad3b-48d1-bf0f-2c6be94c7b8b",
+   "metadata": {},
+   "source": [
+    "\"\"\"Multithreading in Python refers to the ability of a program to execute multiple threads (smaller units of a process) simultaneously within the same process. Each thread represents an independent flow of execution, sharing the same resources, such as memory space, file handles, etc. Python threads are lightweight, and the threading module in Python provides tools for creating and managing threads.\"\"\""
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "c36b3715-987f-44b4-9d7d-db80d3095b43",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "threadthread1:1\n",
+      "threadthread1:2\n",
+      "threadthread2:1\n",
+      "threadthread2:2\n",
+      "multithreading exapmle has finished\n"
+     ]
+    }
+   ],
+   "source": [
+    "import threading\n",
+    "\n",
+    "def print_num ():\n",
+    "    for i in range(1,3):\n",
+    "        print(f\"thread{threading.current_thread().name}:{i}\")\n",
+    "          \n",
+    "thread1 = threading.Thread(target=print_num, name=\"thread1\")\n",
+    "thread2 = threading.Thread(target=print_num, name=\"thread2\")\n",
+    "          \n",
+    "thread1.start()\n",
+    "thread2.start()\n",
+    "          \n",
+    "thread1.join()\n",
+    "thread2.join()\n",
+    "print(\"multithreading exapmle has finished\")"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "0500e6d5-ae33-489e-9ea9-3930cae81688",
+   "metadata": {},
+   "source": [
+    "Q2- why threading module used? write the use of the following function:\n",
+    "    \n",
+    "    1. activecount()\n",
+    "    2. currentthread()\n",
+    "    3.enumerate()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "4668981f-638b-44a0-af82-3da8b3785c1a",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "threadthread1:1\n",
+      "threadthread1:2\n",
+      "threadthread1:3\n",
+      "threadthread1:4\n",
+      "threadthread1:5\n",
+      "threadthread2:1\n",
+      "threadthread2:2\n",
+      "threadthread2:3\n",
+      "threadthread2:4\n",
+      "threadthread2:5\n",
+      "Active Threads: [<_MainThread(MainThread, started 140245247391552)>, <Thread(IOPub, started daemon 140245176862272)>, <Heartbeat(Heartbeat, started daemon 140245168469568)>, <Thread(Thread-3 (_watch_pipe_fd), started daemon 140245143291456)>, <Thread(Thread-4 (_watch_pipe_fd), started daemon 140245134898752)>, <ControlThread(Control, started daemon 140245126506048)>, <HistorySavingThread(IPythonHistorySavingThread, started 140244640855616)>, <ParentPollerUnix(Thread-2, started daemon 140244632462912)>]\n",
+      "Number of Active Threads: 8\n"
+     ]
+    }
+   ],
+   "source": [
+    "import threading\n",
+    "\n",
+    "def print_num ():\n",
+    "    for i in range(1,6):\n",
+    "        print(f\"thread{threading.current_thread().name}:{i}\")\n",
+    "          \n",
+    "thread1 = threading.Thread(target=print_num, name=\"thread1\")\n",
+    "thread2 = threading.Thread(target=print_num, name=\"thread2\")\n",
+    "\n",
+    "thread1.start()\n",
+    "thread2.start()\n",
+    "\n",
+    "active_threads = threading.enumerate()\n",
+    "print(\"Active Threads:\", active_threads)\n",
+    "\n",
+    "# Get the number of active threads\n",
+    "num_active_threads = threading.active_count()\n",
+    "print(\"Number of Active Threads:\", num_active_threads)\n",
+    "thread1.join()\n",
+    "thread2.join()\n",
+    "                    "
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "a2702cd2-3737-4176-b4db-502e60cd2ed2",
+   "metadata": {},
+   "source": [
+    "Q3- explain the followinjg function:\n",
+    "    \n",
+    "    1. run()\n",
+    "    2.start()\n",
+    "    3.join()\n",
+    "    4.isAlive()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "0c48e940-b805-45b2-afbd-c8e708f89859",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "threadthread1:1\n",
+      "threadthread2:1\n"
+     ]
+    }
+   ],
+   "source": [
+    "import threading\n",
+    "\n",
+    "def print_num():\n",
+    "    for i in range(1,2):\n",
+    "        print(f\"thread{threading.current_thread().name}:{i}\")\n",
+    "        \n",
+    "thread1 = threading.Thread(target=print_num, name=\"thread1\")\n",
+    "thread2 = threading.Thread(target=print_num, name=\"thread2\")\n",
+    "thread1.start()\n",
+    "thread2.start()\n",
+    "while thread1.is_alive or thread2.is_alive():\n",
+    "    pass\n",
+    "print(\"bus itna ho jaye \")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "56bc050f-c7c9-4ce6-9fe1-c9dcbced25e2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import threading\n",
+    "\n",
+    "def print_num():\n",
+    "    for i in range(1,2):\n",
+    "        print(f\"thread{threading.current_thread().name}:{i}\")\n",
+    "        \n",
+    "thread1 = threading.Thread(target=print_num, name=\"thread1\")\n",
+    "thread2 = threading.Thread(target=print_num, name=\"thread2\")\n",
+    "thread1.run()\n",
+    "thread2.run()"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "c4b5276e-7185-4623-996c-0914073a22d0",
+   "metadata": {},
+   "source": [
+    "Q4- write apython prgram to create two tread. thread one must print the list of square and thread two must print the list of cubes."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "ea81eecf-e5ea-4e67-b9bd-efca0357195e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import threading\n",
+    "\n",
+    "def calculate_square(numbers):\n",
+    "    for number in numbers:\n",
+    "        print(f\"square of {number} :{number**2}\")\n",
+    "        \n",
+    "def calculate_cube(numbers):\n",
+    "    for number in numbers:\n",
+    "        print(f\"cube of{number}: {number**3}\")\n",
+    "numbers_list = [1,2,3,4]\n",
+    "square_thread =threading.Thread(target=calculate_square,args =(numbers_list,),name=\"square_thread\")\n",
+    "cube_thread =threading.Thread(target=calculate_cube,args =(numbers_list,),name=\"cube_thread\")        \n",
+    "\n",
+    "square_thread.start()\n",
+    "cube_thread.start()\n",
+    "\n",
+    "square_thread.join()\n",
+    "cube_thread.join()\n",
+    "\n",
+    "\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "244e12b6-671f-49e0-a777-6f7c5e7ccb7d",
+   "metadata": {},
+   "source": [
+    "Q5- state adv and disadv. of multithreading"
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "d9856121-4432-442b-bbb2-1894755960a1",
+   "metadata": {},
+   "source": [
+    "Advantages:\n",
+    "\n",
+    "Concurrency: Multithreading allows multiple threads to execute concurrently within a single process. This can lead to improved performance and more efficient utilization of system resources, especially in multi-core processors.\n",
+    "\n",
+    "Responsiveness: Multithreading can enhance the responsiveness of applications, particularly in user interfaces. By offloading time-consuming tasks to separate threads, the main thread can remain responsive and continue handling user interactions.\n",
+    "\n",
+    "Parallelism: Multithreading enables parallelism, where multiple tasks can be performed simultaneously. This is particularly beneficial for computationally intensive applications that can be divided into smaller tasks running in separate threads.\n",
+    "\n",
+    "Resource Sharing: Threads in the same process share the same resources, such as memory space. This makes it easier to communicate and share data between threads without the need for complex inter-process communication mechanisms.\n",
+    "\n",
+    "Disadvantages:\n",
+    "\n",
+    "Complexity: Multithreading introduces complexities in program design and debugging. Handling shared resources and synchronizing threads correctly can be challenging, leading to potential bugs and hard-to-reproduce issues like race conditions and deadlocks.\n",
+    "\n",
+    "Overhead: Creating and managing threads incur some overhead. Switching between threads and synchronization mechanisms can consume CPU cycles and memory, impacting performance, especially for applications with many short-lived threads.\n",
+    "\n",
+    "Resource Contentions: In a multithreaded environment, threads may compete for shared resources, leading to resource contention. This contention can result in decreased performance and might require careful design and use of synchronization mechanisms to avoid bottlenecks.\n",
+    "\n",
+    "Difficulty in Debugging: Debugging multithreaded applications can be more complex than single-threaded ones. Issues like race conditions and deadlocks can be hard to identify and reproduce consistently, making debugging more challenging."
+   ]
+  },
+  {
+   "cell_type": "raw",
+   "id": "ea58b6e0-c330-4db0-a25e-2ec105473787",
+   "metadata": {},
+   "source": [
+    "Q6-explain deadlock and race condition"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "b83ecd29-d6cf-48e2-b491-aafe5b5085bf",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.10.8"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
